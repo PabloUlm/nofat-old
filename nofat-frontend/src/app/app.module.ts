@@ -18,6 +18,7 @@ import { AlertService, AuthenticationService, UserService } from './services';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
+import { UserComponent } from './user';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { RegisterComponent } from './register';
         AlertComponent,
         HomeComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        UserComponent
     ],
     providers: [
         AuthGuard,
