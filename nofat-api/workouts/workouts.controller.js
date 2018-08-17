@@ -4,8 +4,8 @@ const workoutService = require('./workout.service');
 
 // routes
 router.get('/:id', getById);
-router.get('/current', getCurrent);
-router.put('/:id', update);
+// router.get('/current', getCurrent);
+// router.put('/:id', update);
 router.delete('/:id', _delete);
 
 module.exports = router;
