@@ -4,7 +4,9 @@
     "description": "NodeJS + MongoDB API for NoFat Management",
     "license": "MIT",
     "scripts": {
-        "start": "nodemon ./server.js"
+        "start": "nodemon ./server.js",
+        "predeploy": "rsync --progress -r . nofat:/app/api --exclude node_modules",
+        "deploy": "ssh nofat 'cd /app/api && npm install && service nofat-api restart'"
     },
     "dependencies": {
         "bcryptjs": "^2.4.3",
