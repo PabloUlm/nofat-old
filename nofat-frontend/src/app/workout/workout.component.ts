@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CountdownModule } from 'ngx-countdown';
 
 @Component({
   selector: 'app-workout',
@@ -9,7 +10,7 @@ export class WorkoutComponent implements OnInit {
 
   @ViewChild('videoElement') videoElement: any;
   video: any;
-
+  public config = {leftTime: 1000 * 10};
   constructor() { }
 
   ngOnInit() {
@@ -48,5 +49,21 @@ export class WorkoutComponent implements OnInit {
 
   public startVideo() {
     this.start();
+  }
+
+  public startExercice() {
+    console.log('start exercice');
+  }
+
+  public onNotify(event: Event) {
+
+  }
+
+  public onFinished() {
+
+  }
+
+  public onStart() {
+
   }
 }

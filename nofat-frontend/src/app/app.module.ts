@@ -20,13 +20,15 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { UserComponent } from './user';
 import { WorkoutComponent } from './workout';
+import { CountdownModule } from 'ngx-countdown';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        routing
+        routing,
+        CountdownModule
     ],
     declarations: [
         AppComponent,
