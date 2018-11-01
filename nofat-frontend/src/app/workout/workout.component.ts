@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CountdownModule } from 'ngx-countdown';
+import { interval, BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-workout',
@@ -8,24 +9,33 @@ import { CountdownModule } from 'ngx-countdown';
 })
 export class WorkoutComponent implements OnInit {
 
-  @ViewChild('videoElement') videoElement: any;
-  video: any;
-  public config = {leftTime: 1000 * 10};
+  @ViewChild('videoElement') public videoElement: any;
+  public video: any;
+  public defaultExerciseTime = 10; // = 600; // 10 minutes
+  public showTimer = false;
+  public showCamera = false;
+  public timer: Observable<string>;
+
   constructor() { }
 
   ngOnInit() {
     this.video = this.videoElement.nativeElement;
   }
 
-  start() {
+  public transformTime(seconds: number): string {
+    const minutes: number = Math.floor(seconds / 60);
+    return minutes + ':' + (seconds - minutes * 60);
+  }
+
+  public start(): void {
     this.initCamera({ video: true, audio: false });
   }
 
-  sound() {
+  public sound(): void {
     this.initCamera({ video: true, audio: true });
   }
 
-  initCamera(config: any) {
+  public initCamera(config: any): void {
     const browser = <any>navigator;
 
     browser.getUserMedia = (browser.getUserMedia ||
@@ -39,11 +49,11 @@ export class WorkoutComponent implements OnInit {
     });
   }
 
-  pause() {
+  public pause(): void {
     this.video.pause();
   }
 
-  resume() {
+  public resume(): void {
     this.video.play();
   }
 
@@ -51,8 +61,22 @@ export class WorkoutComponent implements OnInit {
     this.start();
   }
 
-  public startExercice() {
-    console.log('start exercice');
+  public startExercise() {
+    this.showTimer = true;
+    this.timer = interval(1000).pipe(
+      map((x) => {
+        if (this.defaultExerciseTime <= x) {
+          this.startPosexercise();
+        }
+        return this.transformTime(this.defaultExerciseTime - x);
+       })
+    );
+  }
+
+  public startPosexercise() {
+    this.showTimer = false;
+    this.showCamera = true;
+    this.startVideo();
   }
 
   public onNotify(event: Event) {

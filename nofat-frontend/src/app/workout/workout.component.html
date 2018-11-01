@@ -4,10 +4,13 @@
 <p>
     The exercices are: - bla bla bla
 </p>
-<countdown [config]="config">$!m!:$!s!</countdown>
-hla
-<!-- <button (click)="startExercice()">Start Exercice</button> -->
 
-<!-- <countdown [config]="config" (start)="onStart()" (finished)="onFinished()" (notify)="onNotify($event)"></countdown> -->
+<button (click)="startExercise()">Start Exercise</button> 
 
-<!-- <video #videoElement></video> -->
+<div class="timer-container" *ngIf="showTimer">
+    <span>
+        {{ timer | async }}
+    </span>
+</div>
+
+<video #videoElement [class.show]="showCamera"></video>
