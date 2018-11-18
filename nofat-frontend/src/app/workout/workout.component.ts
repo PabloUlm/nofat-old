@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { interval, BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AchievementService } from '../services/achievement.service';
+import { Achievement } from '../_models';
 
 @Component({
   selector: 'app-workout',
@@ -15,11 +17,18 @@ export class WorkoutComponent implements OnInit {
   public showTimer = false;
   public showCamera = false;
   public timer: Observable<string>;
+  public achievement: Achievement;
 
-  constructor() { }
+  constructor(
+    public achievementService: AchievementService
+  ) { }
 
   ngOnInit() {
     this.video = this.videoElement.nativeElement;
+  }
+
+  public workoutDone(): void {
+    this.achievementService.addAchievement(this.currentUser, this.achievement);
   }
 
   public transformTime(seconds: number): string {

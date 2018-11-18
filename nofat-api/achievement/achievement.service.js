@@ -1,5 +1,5 @@
 ﻿const db = require('_helpers/db');
-const Workout = db.UserWorkout;
+const achievement = db.achievement;
 
 module.exports = {
     getByUserAndWorkout,
@@ -16,5 +16,5 @@ async function create(workoutParam) {
 }
 
 async function _delete(id) {
-    await Workout.findByIdAndRemove(id);
+    await achievement.findByIdAndRemove(id);
 }
