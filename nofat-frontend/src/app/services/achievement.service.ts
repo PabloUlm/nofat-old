@@ -10,8 +10,9 @@ export class AchievementService {
     private http: HttpClient
     ) { }
 
-   addAchievement(user: User, achievement: Achievement) {
-    return this.http.post(`${environment.apiUrl}/achievement` + user.id, achievement);
-   }
+  addAchievement(achievement: Achievement) {
+    // console.log(localStorage.getItem('currentUser'));
+    return this.http.post(`${environment.apiUrl}/achievement`, achievement);
+  }
 }
 // module.exports = NofatService;

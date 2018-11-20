@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { interval, BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 import { AchievementService } from '../services/achievement.service';
 import { Achievement } from '../_models';
 
@@ -17,7 +17,14 @@ export class WorkoutComponent implements OnInit {
   public showTimer = false;
   public showCamera = false;
   public timer: Observable<string>;
-  public achievement: Achievement;
+  public achievement: Achievement = {
+    id: 12245,
+    description: 'tha description',
+    photoUrl: 'photo.com',
+    userId: 33,
+    videoUrl: 'video',
+    workoutId: 123,
+  };
 
   constructor(
     public achievementService: AchievementService
@@ -28,7 +35,16 @@ export class WorkoutComponent implements OnInit {
   }
 
   public workoutDone(): void {
-    this.achievementService.addAchievement(this.currentUser, this.achievement);
+    this.achievementService
+    .addAchievement(this.achievement)
+    .pipe(first())
+    .subscribe(
+      data => {
+        console.log('successful');
+      },
+      error => {
+        console.log('shit');
+      });
   }
 
   public transformTime(seconds: number): string {

@@ -20,6 +20,7 @@ import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { UserComponent } from './user';
 import { WorkoutComponent } from './workout';
+import { AchievementService } from './services/achievement.service';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import { WorkoutComponent } from './workout';
         AlertService,
         AuthenticationService,
         UserService,
+        AchievementService,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 

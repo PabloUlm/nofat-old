@@ -2,7 +2,7 @@
     id: number;
     userId: number;
     workoutId: number;
-    achievement: string;
+    description: string;
     photoUrl: string;
     videoUrl: string;
 }
