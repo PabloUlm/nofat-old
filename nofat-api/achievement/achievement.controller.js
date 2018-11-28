@@ -3,12 +3,12 @@ const router = express.Router();
 const achievementService = require('./achievement.service');
 
 // routes
-router.get('/:achievement', addAchievement);
+router.post('/achievement', addAchievement);
 
 module.exports = router;
 
 function addAchievement(req, res, next) {
     achievementService.add(req.params)
-        .then(achievement => achievement ? res.json(achievement) : res.sendStatus(404))
+        .then(achievement => achievement ? res.json(achievement) : res.status(400).json({ message: 'Hey you bitch!' }))
         .catch(err => next(err));
 }
