@@ -6,11 +6,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 import { routing } from './app.routing';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import { AlertComponent } from './_directives';
 import { AuthGuard } from './_guards';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
@@ -21,13 +18,22 @@ import { RegisterComponent } from './register';
 import { UserComponent } from './user';
 import { WorkoutComponent } from './workout';
 import { AchievementService } from './services/achievement.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        routing
+        routing,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        MatIconModule
     ],
     declarations: [
         AppComponent,

@@ -5,7 +5,7 @@
     The exercices are: - bla bla bla
 </p>
 
-<button (click)="startExercise()">Start Exercise</button> 
+<button mat-raised-button (click)="startExercise()">Start Exercise</button> 
 
 <div class="timer-container" *ngIf="showTimer">
     <span>
@@ -13,6 +13,6 @@
     </span>
 </div>
 
-<button (click)="workoutDone()">DONE</button>
+<button mat-raised-button (click)="workoutDone()">DONE</button>
 
 <video #videoElement [class.show]="showCamera"></video>

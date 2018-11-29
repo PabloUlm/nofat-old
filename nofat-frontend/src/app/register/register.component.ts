@@ -10,7 +10,8 @@ export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
     submitted = false;
-
+    public hide = true;
+    
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,

@@ -1,7 +1,7 @@
 ﻿<h1>Hi {{currentUser.firstName}}!</h1>
 
-<a href="/workout">Workout</a>
-<a href="#">My account</a>
+<a mat-raised-button [routerLink]="['/workout']">Workout</a>
+<a mat-raised-button>My account</a>
 
 <ul>
     <li *ngFor="let user of users">
@@ -9,4 +9,4 @@
         <app-user></app-user>
     </li>
 </ul>
-<p><a [routerLink]="['/login']">Logout</a></p>
+<p><a mat-fab [routerLink]="['/login']">Logout</a></p>
