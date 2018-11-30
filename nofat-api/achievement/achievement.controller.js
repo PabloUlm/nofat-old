@@ -3,7 +3,7 @@ const router = express.Router();
 const achievementService = require('./achievement.service');
 
 // routes
-router.post('/achievement', addAchievement);
+router.post('/', addAchievement);
 
 module.exports = router;
 
