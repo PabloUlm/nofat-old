@@ -15,8 +15,8 @@ app.use(jwt());
 
 // api routes
 app.use('/users', require('./users/users.controller'));
-app.use('/workouts', require('./workouts/workouts.controller'));
 app.use('/seasons', require('./seasons/seasons.controller'));
+app.use('/workout', require('./workouts/workout.controller'));
 app.use('/achievement', require('./achievement/achievement.controller'));
 
 // global error handler

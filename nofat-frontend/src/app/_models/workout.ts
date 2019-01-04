@@ -1,5 +1,5 @@
 ﻿export class Workout {
     id: number;
-    week: number;
+    name: string;
     description: string;
 }
