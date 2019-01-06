@@ -6,7 +6,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 import { routing } from './app.routing';
-import { homeRouting } from './home/home.routing';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertComponent } from './_directives';
@@ -23,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { RankingComponent } from './ranking/ranking.component';
 
 @NgModule({
     imports: [
@@ -30,7 +30,6 @@ import { MatIconModule } from '@angular/material/icon';
         ReactiveFormsModule,
         HttpClientModule,
         routing,
-        homeRouting,
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
@@ -45,7 +44,8 @@ import { MatIconModule } from '@angular/material/icon';
         RegisterComponent,
         UserComponent,
         WorkoutComponent,
-        NewWorkoutComponent
+        NewWorkoutComponent,
+        RankingComponent
     ],
     providers: [
         AuthGuard,
