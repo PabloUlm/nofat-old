@@ -6,6 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 import { routing } from './app.routing';
+import { homeRouting } from './home/home.routing';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertComponent } from './_directives';
@@ -16,8 +17,8 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { UserComponent } from './user';
-import { WorkoutComponent } from './workout';
-import { AchievementService } from './services/achievement.service';
+import { WorkoutComponent, NewWorkoutComponent } from './workout';
+import { AchievementService, WorkoutService } from './services';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -29,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
         ReactiveFormsModule,
         HttpClientModule,
         routing,
+        homeRouting,
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
@@ -42,7 +44,8 @@ import { MatIconModule } from '@angular/material/icon';
         LoginComponent,
         RegisterComponent,
         UserComponent,
-        WorkoutComponent
+        WorkoutComponent,
+        NewWorkoutComponent
     ],
     providers: [
         AuthGuard,
@@ -50,6 +53,7 @@ import { MatIconModule } from '@angular/material/icon';
         AuthenticationService,
         UserService,
         AchievementService,
+        WorkoutService,
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 

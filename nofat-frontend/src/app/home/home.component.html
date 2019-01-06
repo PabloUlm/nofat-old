@@ -1,12 +1,26 @@
-﻿<h1>Hi {{currentUser.firstName}}!</h1>
+﻿<header>
+  <h1>NO FAT</h1>
+  <button>START MY WORKOUT</button>
+</header>
 
-<a mat-raised-button [routerLink]="['/workout']">Workout</a>
-<a mat-raised-button>My account</a>
+<div>
+  <div class="navigation">
+    <a mat-raised-button [routerLink]="['/workout']">Accomplish my Workout</a>
+    <a mat-raised-button [routerLink]="['/workout/new']">Add New Workout for this week</a>
+  </div>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<footer>
+  <p><a mat-fab [routerLink]="['/login']">Logout</a></p>
+</footer>
 
 <ul>
-    <li *ngFor="let user of users">
-        {{user.username}}
-        <app-user></app-user>
-    </li>
+  <li *ngFor="let user of users">
+    {{user.username}}
+    <app-user></app-user>
+  </li>
 </ul>
-<p><a mat-fab [routerLink]="['/login']">Logout</a></p>
