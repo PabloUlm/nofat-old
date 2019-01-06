@@ -4,6 +4,7 @@
     "description": "NodeJS + MongoDB API for NoFat Management",
     "license": "MIT",
     "scripts": {
+        "debug": "node --nolazy --inspect-brk=9229 ./server.js",
         "start": "nodemon ./server.js",
         "predeploy": "rsync --progress -r . nofat:/app/api --exclude node_modules",
         "deploy": "ssh nofat 'cd /app/api && npm install && service nofat-api restart'"
