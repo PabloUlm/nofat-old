@@ -1,5 +1,5 @@
-﻿const db = require('_helpers/db');
-const Achievement = db.Achievement;
+﻿var db = require('_helpers/db');
+var Achievement = db.Achievement;
 
 module.exports = {
     add
@@ -8,7 +8,7 @@ module.exports = {
 async function add(params) {
     if (params.workoutId && params.userId && params.description) {
         // TODO: check if user and workout exist
-        const achievement = new Achievement(params);
+        var achievement = new Achievement(params);
         
         // Save achievement
         achievement.save();

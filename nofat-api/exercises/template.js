@@ -10,7 +10,7 @@ exports.get = function(req, res) {
             'description': 'Some example of description',
             'url': '/path/pushups.gif'
         }
-    ]
+    ];
 
     var fields = [
         'id',
