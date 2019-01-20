@@ -1,6 +1,13 @@
 <h1>Add new workout</h1>
 
 <form [formGroup]="newWorkoutForm" (ngSubmit)="onSubmit()">
+  <mat-button-toggle-group name="mode" aria-label="Workout mode">
+    <mat-button-toggle value="minutes">Minutes</mat-button-toggle>
+    <mat-button-toggle value="repetitions">Repetitions</mat-button-toggle>
+  </mat-button-toggle-group>
+  
+  <!-- add dynamic entries with: select + input -->
+  
   <div class="form-group">
     <mat-form-field>
         <input matInput placeholder="Name" type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />

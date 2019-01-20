@@ -12,8 +12,8 @@ export class NewWorkoutComponent {
 
   public submitted = false;
   newWorkoutForm: FormGroup = this.formBuilder.group({
-    name: ['', Validators.required],
-    description: ['', Validators.required]
+    mode: '',
+    exercices: this.formBuilder.array([])
   });
 
   constructor(
@@ -23,6 +23,20 @@ export class NewWorkoutComponent {
 
   // convenience getter for easy access to form fields
   get f() { return this.newWorkoutForm.controls; }
+
+  public createExercBMinEntry(): FormGroup {
+    return this.formBuilder.group({
+      exercise: '',
+      minutes: ''
+    });
+  }
+
+  public createExercBRepEntry(): FormGroup {
+    return this.formBuilder.group({
+      exercise: '',
+      repetitions: ''
+    });
+  }
 
   public onSubmit(): void {
     this.submitted = true;
