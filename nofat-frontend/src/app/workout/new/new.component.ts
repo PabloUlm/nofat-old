@@ -51,6 +51,7 @@ export class NewWorkoutComponent implements OnInit {
   public getAllExercises(): void {
     this.exerciseService.getAll().subscribe(res => {
       console.log('### res ', res);
+      this.exercisesData = res;
     });
   }
 

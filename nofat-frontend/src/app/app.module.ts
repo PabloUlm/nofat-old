@@ -18,10 +18,13 @@ import { RegisterComponent } from './register';
 import { UserComponent } from './user';
 import { WorkoutComponent, NewWorkoutComponent } from './workout';
 import { AchievementService, WorkoutService } from './services';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import {
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
+  } from '@angular/material';
 import { RankingComponent } from './ranking/ranking.component';
 
 @NgModule({
@@ -33,6 +36,7 @@ import { RankingComponent } from './ranking/ranking.component';
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSelectModule,
         BrowserAnimationsModule,
         MatIconModule
     ],
