@@ -18,6 +18,7 @@ app.use('/users', require('./users/users.controller'));
 app.use('/seasons', require('./seasons/seasons.controller'));
 app.use('/workout', require('./workouts/workout.controller'));
 app.use('/achievement', require('./achievement/achievement.controller'));
+app.use('/exercise', require('./exercises/exercises.conroller'));
 
 // global error handler
 app.use(errorHandler);

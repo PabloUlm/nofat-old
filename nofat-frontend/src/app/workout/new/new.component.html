@@ -7,14 +7,16 @@
 
   <ng-container *ngIf="f.mode.value">
     <div formArrayName="exercises"
-    *ngFor="let exercise of exercises.controls; let i = index;">
+    *ngFor="let exercise of newWorkoutForm.controls['exercises'].controls; let i = index;">
       <div [formGroupName]="i">
-        <input formControlName="exercise" placeholder="Item name">
-        <input formControlName="qty" placeholder="Item description">
+        <input mat-input formControlName="exercise" placeholder="Item name">
+        <input 
+          matInput 
+          [placeholder]="(f.mode.value === 'minutes')? 'Add minutes': 'Add repetitions'" 
+          formControlName="qty" >
       </div>
-      Chosen name: {{ exercises.controls[i].controls.exercise.value }}
     </div>
   </ng-container>
-
+  <button mat-button type="button" (click)="addExercise()">Add Next</button>
 
 <a mat-raised-button [routerLink]="['/']">Back</a>

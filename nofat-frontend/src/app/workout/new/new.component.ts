@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkoutService } from '../../services';
+import { WorkoutService, ExerciseService } from '../../services';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Exercise } from '../../_models';
 
 @Component({
   selector: 'app-new-workout',
@@ -12,16 +13,19 @@ export class NewWorkoutComponent implements OnInit {
   public exercises: FormArray;
   public newWorkoutForm: FormGroup;
   public submitted = false;
+  public exercisesData: Exercise[];
 
   constructor(
     private formBuilder: FormBuilder,
-    private workoutService: WorkoutService
+    private workoutService: WorkoutService,
+    private exerciseService: ExerciseService
     ) {}
 
   public ngOnInit(): void {
+    this.getAllExercises();
     this.newWorkoutForm = this.formBuilder.group({
       mode: '',
-      exercices: this.formBuilder.array([this.getExercEntry()])
+      exercises: this.formBuilder.array([this.getExercEntry()])
     });
   }
 
@@ -30,13 +34,10 @@ export class NewWorkoutComponent implements OnInit {
 
   public setMode(modeValue: string): void {
     this.newWorkoutForm.patchValue({mode: modeValue});
-
-    console.log(this.newWorkoutForm);
   }
 
   public addExercise(): void {
-    console.log(this.newWorkoutForm);
-    this.exercises = this.newWorkoutForm.get('exercises') as FormArray;
+    this.exercises = this.newWorkoutForm.controls['exercises'] as FormArray;
     this.exercises.push(this.getExercEntry());
   }
 
@@ -44,6 +45,12 @@ export class NewWorkoutComponent implements OnInit {
     return this.formBuilder.group({
       exercise: '',
       qty: ''
+    });
+  }
+
+  public getAllExercises(): void {
+    this.exerciseService.getAll().subscribe(res => {
+      console.log('### res ', res);
     });
   }
 
