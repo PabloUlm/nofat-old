@@ -1,5 +1,10 @@
 <h1>Add new workout</h1>
 
+<div class="difficulty-block">
+  <span>Difficulty:</span>
+  <strong>{{ difficulty }}</strong>
+</div>
+
 <form [formGroup]="newWorkoutForm" (ngSubmit)="onSubmit()">
 
   <button mat-raised-button color="primary" (click)="setMode('minutes')">By minutes</button>

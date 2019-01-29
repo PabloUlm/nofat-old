@@ -4,6 +4,9 @@ import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { Exercise } from '../../_models';
 
+export const MAGIC_NUMBER_REPETITIONS = 80; // bigger is less difficulty
+export const MAGIC_NUMBER_MINUTES = 8; // bigger is more difficulty
+
 @Component({
   selector: 'app-new-workout',
   templateUrl: './new.component.html',
@@ -14,6 +17,7 @@ export class NewWorkoutComponent implements OnInit {
   public newWorkoutForm: FormGroup;
   public submitted = false;
   public exercisesData: Exercise[];
+  public difficulty = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,6 +30,38 @@ export class NewWorkoutComponent implements OnInit {
     this.newWorkoutForm = this.formBuilder.group({
       mode: '',
       exercises: this.formBuilder.array([this.getExercEntry()])
+    });
+    this.onChanges();
+  }
+
+  public onChanges(): void {
+    this.newWorkoutForm.valueChanges.subscribe(val => {
+      let total = 0;
+
+      if (val.mode === 'minutes') {
+        for (const exer of val.exercises) {
+          const minutes = parseInt(exer.qty, 10);
+          const exerData: Exercise[] = this.exercisesData.filter(
+            (val: Exercise) => val.id === exer.exercise);
+          if (exerData.length) {
+            total +=
+              exerData[0].difficulty * minutes / MAGIC_NUMBER_MINUTES;
+          }
+        }
+      } else if (val.mode === 'repetitions') {
+
+        for (const exer of val.exercises) {
+          const rep = parseInt(exer.qty, 10);
+          const exerData: Exercise[] = this.exercisesData.filter(
+            (val: Exercise) => val.id === exer.exercise);
+          if (exerData.length) {
+            total +=
+              exerData[0].difficulty * rep / MAGIC_NUMBER_REPETITIONS;
+          }
+        }
+      }
+
+      this.difficulty = total;
     });
   }
 
@@ -44,7 +80,7 @@ export class NewWorkoutComponent implements OnInit {
   public getExercEntry(): FormGroup {
     return this.formBuilder.group({
       exercise: '',
-      qty: ''
+      qty:  [0, [Validators.required, Validators.pattern('^[0-9]*$')]]
     });
   }
 
