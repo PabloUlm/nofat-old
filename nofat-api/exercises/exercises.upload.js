@@ -16,9 +16,15 @@ exports.post = function (req, res) {
          ignoreEmpty: true
      })
      .on("data", function(data){
-         data['_id'] = new mongoose.Types.ObjectId();
-          
-         exercises.push(data);
+
+
+
+        // TODO me he quedado aqui
+
+
+         // data['_id'] = new mongoose.Types.ObjectId();
+        data['_id'] = data.id;
+        exercises.push(data);
      })
      .on("end", function(){
         Exercises.create(exercises, function(err, documents) {

@@ -1,5 +1,6 @@
-﻿const db = require('_helpers/db');
-const WorkoutExercise = db.WorkoutExercise;
+﻿var db = require('_helpers/db');
+var WorkoutExercise = db.WorkoutExercise;
+var Exercise = db.Exercise;
 // const Season = db.Season;
 // Sessions will be added in the future
 
@@ -7,13 +8,17 @@ module.exports = {
     add
 };
 
-async function add(params) {
-    // temporal
-    // const workout = new Workout(params);
-    // workout.id = '1';
+async function add(workoutId, exerciseId, qty) {
+    var workoutExercise = new WorkoutExercise();
+    workoutExercise.workoutId = workoutId;
 
-    // // save workout
-    // await workout.save();
+    // Check if exercise id is valid
+    if (await Exercise.findOne({ id: exercise })) {
+        workoutExercise.exerciseId = exerciseId;
+        workoutExercise.qty = qty;
 
-    // return params;
+        await workoutExercise.save();
+    } else {
+        throw 'Error: Exercise with id ' + exercise + ' does NOT exist';
+    }
 }

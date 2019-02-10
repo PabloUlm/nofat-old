@@ -1,5 +1,6 @@
-﻿const db = require('_helpers/db');
-const Workout = db.Workout;
+﻿var db = require('_helpers/db');
+var workoutExercise = require('../workoutExercise/workoutExercise.service');
+var Workout = db.Workout;
 // const Season = db.Season;
 // Sessions will be added in the future
 
@@ -8,12 +9,61 @@ module.exports = {
 };
 
 async function add(params) {
-    // temporal
-    const workout = new Workout(params);
-    workout.id = '1';
+    var workout = new Workout();
+    // Get session id number
+    var sessionId = 0;
+    
+    // Get week number of the year
+    var dt = new Date();
+    var week = week_no(dt);
+    workout.week = week;
 
-    // save workout
-    await workout.save();
+    // Get workout id
+    workout.id = sessionId.toString() + week.toString();
+    
+    // Get mode
+    workout.mode = params.mode;
+
+    // validate
+    if (await Workout.findOne({ id: workout.id })) {
+        // throw 'Workout "' + workout.id + '" already exists, make update logic';
+    }
+
+    // Save and add exercises
+    await workout.save().then( // ?? i need the workout id  for the workoutExercise, so like this?
+        res => {
+            if (!params.exercises || params.exercises.length === 0) {
+                throw 'Error: There are not exercises available';
+            }
+        
+            for (var i = 0; i < params.exercises.length; i++) {
+                workoutExercise.add(
+                    workout.id, 
+                    params.exercises[i].exercise, 
+                    params.exercises[i].qty);
+            }
+        }
+    );
 
     return params;
 }
+
+function week_no(dt) 
+{
+    var tdt = new Date(dt.valueOf());
+    var dayn = (dt.getDay() + 6) % 7;
+    tdt.setDate(tdt.getDate() - dayn + 3);
+    var firstThursday = tdt.valueOf();
+    tdt.setMonth(0, 1);
+    if (tdt.getDay() !== 4) 
+    {
+    tdt.setMonth(0, 1 + ((4 - tdt.getDay()) + 7) % 7);
+    }
+    return 1 + Math.ceil((firstThursday - tdt) / 604800000);
+}
+
+// dt = new Date();
+// console.log(ISO8601_week_no(dt));
+
+// dt = new Date(2015, 10, 1);
+// console.log(ISO8601_week_no(dt));
