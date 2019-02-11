@@ -9,28 +9,27 @@ exports.post = function (req, res) {
     var exercisesFile = req.files.file;
  
     var exercises = [];
-         
-    csv
-     .fromString(exercisesFile.data.toString(), {
-         headers: true,
-         ignoreEmpty: true
-     })
-     .on("data", function(data){
-
-
-
-        // TODO me he quedado aqui
-
-
-         // data['_id'] = new mongoose.Types.ObjectId();
-        data['_id'] = data.id;
-        exercises.push(data);
-     })
-     .on("end", function(){
-        Exercises.create(exercises, function(err, documents) {
-            if (err) throw err;
-         });
+        
+    console.log(convertToHex('12'));
+    // csv
+    //  .fromString(exercisesFile.data.toString(), {
+    //      headers: true,
+    //      ignoreEmpty: true
+    //  })
+    //  .on("data", function(data){
+    //     data['_id'] = new mongoose.Types.ObjectId(convertToHex(data.id));
+    //     exercises.push(data);
+    //  })
+    //  .on("end", function(){
+    //     Exercises.create(exercises, function(err, documents) {
+    //         if (err) throw err;
+    //      });
           
-         res.send(exercises.length + ' exercises have been successfully uploaded.');
-     });
+    //      res.send(exercises.length + ' exercises have been successfully uploaded.');
+    //  });
 };
+
+convertToHex(id) {
+    var hexBase = '0000000000000000';
+    
+}
