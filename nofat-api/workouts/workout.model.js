@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-const schema = new Schema({
-    id: {  type: String, required: true },
+var schema = new Schema({
     // seasonId: { type: String, required: true },
     week: { type: Number, required: true },
     mode: { type: String, required: true },

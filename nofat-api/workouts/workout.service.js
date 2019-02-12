@@ -1,4 +1,5 @@
-﻿var db = require('_helpers/db');
+﻿var mongoose = require('mongoose');
+var db = require('_helpers/db');
 var workoutExercise = require('../workoutExercise/workoutExercise.service');
 var Workout = db.Workout;
 // const Season = db.Season;
@@ -10,8 +11,9 @@ module.exports = {
 
 async function add(params) {
     var workout = new Workout();
+
     // Get session id number
-    var sessionId = 0;
+    var sessionId = 0; // TODO: Missing session logic
     
     // Get week number of the year
     var dt = new Date();
@@ -19,34 +21,59 @@ async function add(params) {
     workout.week = week;
 
     // Get workout id
-    workout.id = sessionId.toString() + week.toString();
+    workout['_id'] =  new mongoose.Types.ObjectId(convertToHex(sessionId.toString(), week.toString()));
     
     // Get mode
     workout.mode = params.mode;
 
     // validate
-    if (await Workout.findOne({ id: workout.id })) {
-        // throw 'Workout "' + workout.id + '" already exists, make update logic';
-    }
+    if (await Workout.findOne({ _id: workout['_id'] })) {
+        // Delete old workoutExercises related to this workout
+        workoutExercise.deleteByWorkoutId(workout['_id']);
 
-    // Save and add exercises
-    await workout.save().then( // ?? i need the workout id  for the workoutExercise, so like this?
-        res => {
-            if (!params.exercises || params.exercises.length === 0) {
-                throw 'Error: There are not exercises available';
+        // TODO: save new mode into the repeated one
+
+        // Add new ones
+        saveWorkoutExercises(workout['_id'], params);
+    } else {
+        // Save new workout and add exercises
+        await workout.save()
+        .then(
+            res => {
+                if (!params.exercises || params.exercises.length === 0) {
+                    throw 'Error: There are not exercises available';
+                }
+            
+                if (!res) {
+                    throw 'Error: save function response is NULL';
+                }
+
+                saveWorkoutExercises(res['_id'], params);
             }
-        
-            for (var i = 0; i < params.exercises.length; i++) {
-                workoutExercise.add(
-                    workout.id, 
-                    params.exercises[i].exercise, 
-                    params.exercises[i].qty);
-            }
-        }
-    );
+        )
+        .catch(err => {
+            console.log(err);
+        });
+    }
 
     return params;
 }
+
+function convertToHex(sessionId, week) {
+    var hexBase = '000000000000000000000000';
+    hexBase = hexBase.substring(week.length) + week;
+    return sessionId + hexBase.substring(sessionId.length);
+}
+
+function saveWorkoutExercises (workoutId, params) {
+    for (var i = 0; i < params.exercises.length; i++) {
+        workoutExercise.add(
+            workoutId, 
+            params.exercises[i].exercise, 
+            params.exercises[i].qty);
+    }
+}
+
 
 function week_no(dt) 
 {

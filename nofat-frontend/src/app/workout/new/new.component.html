@@ -20,7 +20,7 @@
           required >
           <mat-option 
             *ngFor="let option of exercisesData"
-            [value]="option.id" >
+            [value]="option['_id']" >
             {{option.name}}
           </mat-option>
         </mat-select>
