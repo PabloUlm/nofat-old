@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class ExerciseService {
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-    getAll(): Observable<Exercise[]> {
-        return this.http.get<Exercise[]>(`${environment.apiUrl}/exercise`);
-    }
+  getAll(): Observable<Exercise[]> {
+    return this.http.get<Exercise[]>(`${environment.apiUrl}/exercise`);
+  }
 }

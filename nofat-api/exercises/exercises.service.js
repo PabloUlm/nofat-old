@@ -3,9 +3,9 @@ var db = require('_helpers/db');
 var Exercise = db.Exercise;
 
 module.exports = {
-    getAll,
+  getAll,
 }
 
 async function getAll() {
-    return await Exercise.find();
+  return await Exercise.find();
 }

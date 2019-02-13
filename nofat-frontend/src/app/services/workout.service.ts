@@ -5,10 +5,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class WorkoutService {
-
-  constructor(
-    private http: HttpClient
-    ) { }
+  constructor(private http: HttpClient) {}
 
   addWorkout(workout: Workout) {
     console.log('joupta');

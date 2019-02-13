@@ -5,25 +5,29 @@ var Exercise = db.Exercise;
 // Sessions will be added in the future
 
 module.exports = {
-    add,
-    deleteByWorkoutId
+  add,
+  deleteByWorkoutId
 };
 
 async function add(workoutId, exerciseId, qty) {
-    var workoutExercise = new WorkoutExercise();
-    workoutExercise.workoutId = workoutId;
+  var workoutExercise = new WorkoutExercise();
+  workoutExercise.workoutId = workoutId;
 
-    // Check if exercise id is valid
-    if (await Exercise.findOne({ id: exerciseId })) {
-        workoutExercise.exerciseId = exerciseId;
-        workoutExercise.qty = qty;
+  // Check if exercise id is valid
+  if (await Exercise.findOne({
+      id: exerciseId
+    })) {
+    workoutExercise.exerciseId = exerciseId;
+    workoutExercise.qty = qty;
 
-        await workoutExercise.save();
-    } else {
-        throw 'Error: Exercise with id ' + exerciseId + ' does NOT exist';
-    }
+    await workoutExercise.save();
+  } else {
+    throw 'Error: Exercise with id ' + exerciseId + ' does NOT exist';
+  }
 }
 
 async function deleteByWorkoutId(workoutId) {
-    await WorkoutExercise.find({workoutId: workoutId}).remove().exec();
+  await WorkoutExercise.find({
+    workoutId: workoutId
+  }).remove().exec();
 }

@@ -8,7 +8,7 @@ router.get('/', getAll);
 module.exports = router;
 
 function getAll(req, res, next) {
-    exercisesService.getAll()
-        .then(exerc => res.json(exerc))
-        .catch(err => next(err));
+  exercisesService.getAll()
+    .then(exerc => res.json(exerc))
+    .catch(err => next(err));
 }

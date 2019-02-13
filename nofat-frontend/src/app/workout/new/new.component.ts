@@ -23,7 +23,7 @@ export class NewWorkoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private workoutService: WorkoutService,
     private exerciseService: ExerciseService
-    ) {}
+  ) {}
 
   public ngOnInit(): void {
     this.getAllExercises();
@@ -42,21 +42,20 @@ export class NewWorkoutComponent implements OnInit {
         for (const exer of val.exercises) {
           const minutes = parseInt(exer.qty, 10);
           const exerData: Exercise[] = this.exercisesData.filter(
-            (val: Exercise) => val.id === exer.exercise);
+            (val: Exercise) => val.id === exer.exercise
+          );
           if (exerData.length) {
-            total +=
-              exerData[0].difficulty * minutes / MAGIC_NUMBER_MINUTES;
+            total += (exerData[0].difficulty * minutes) / MAGIC_NUMBER_MINUTES;
           }
         }
       } else if (val.mode === 'repetitions') {
-
         for (const exer of val.exercises) {
           const rep = parseInt(exer.qty, 10);
           const exerData: Exercise[] = this.exercisesData.filter(
-            (val: Exercise) => val.id === exer.exercise);
+            (val: Exercise) => val.id === exer.exercise
+          );
           if (exerData.length) {
-            total +=
-              exerData[0].difficulty * rep / MAGIC_NUMBER_REPETITIONS;
+            total += (exerData[0].difficulty * rep) / MAGIC_NUMBER_REPETITIONS;
           }
         }
       }
@@ -66,10 +65,12 @@ export class NewWorkoutComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.newWorkoutForm.controls; }
+  get f() {
+    return this.newWorkoutForm.controls;
+  }
 
   public setMode(modeValue: string): void {
-    this.newWorkoutForm.patchValue({mode: modeValue});
+    this.newWorkoutForm.patchValue({ mode: modeValue });
   }
 
   public addExercise(): void {
@@ -80,7 +81,7 @@ export class NewWorkoutComponent implements OnInit {
   public getExercEntry(): FormGroup {
     return this.formBuilder.group({
       exercise: '',
-      qty:  [0, [Validators.required, Validators.pattern('^[0-9]*$')]]
+      qty: [0, [Validators.required, Validators.pattern('^[0-9]*$')]]
     });
   }
 
@@ -99,14 +100,15 @@ export class NewWorkoutComponent implements OnInit {
     }
 
     this.workoutService
-    .addWorkout(this.newWorkoutForm.value)
-    .pipe(first())
-    .subscribe(
-      data => {
-        console.log('successful');
-      },
-      error => {
-        console.log('shit');
-      });
+      .addWorkout(this.newWorkoutForm.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log('successful');
+        },
+        error => {
+          console.log('shit');
+        }
+      );
   }
 }

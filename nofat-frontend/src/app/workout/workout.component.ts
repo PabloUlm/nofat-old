@@ -10,7 +10,6 @@ import { Achievement } from '../_models';
   styleUrls: ['./workout.component.styl']
 })
 export class WorkoutComponent implements OnInit {
-
   @ViewChild('videoElement') public videoElement: any;
   public video: any;
   public defaultExerciseTime = 10; // = 600; // 10 minutes
@@ -23,12 +22,10 @@ export class WorkoutComponent implements OnInit {
     photoUrl: 'photo.com',
     userId: 33,
     videoUrl: 'video',
-    workoutId: 123,
+    workoutId: 123
   };
 
-  constructor(
-    public achievementService: AchievementService
-  ) { }
+  constructor(public achievementService: AchievementService) {}
 
   ngOnInit() {
     this.video = this.videoElement.nativeElement;
@@ -36,15 +33,16 @@ export class WorkoutComponent implements OnInit {
 
   public workoutDone(): void {
     this.achievementService
-    .addAchievement(this.achievement)
-    .pipe(first())
-    .subscribe(
-      data => {
-        console.log('successful');
-      },
-      error => {
-        console.log('shit');
-      });
+      .addAchievement(this.achievement)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log('successful');
+        },
+        error => {
+          console.log('shit');
+        }
+      );
   }
 
   public transformTime(seconds: number): string {
@@ -63,10 +61,11 @@ export class WorkoutComponent implements OnInit {
   public initCamera(config: any): void {
     const browser = <any>navigator;
 
-    browser.getUserMedia = (browser.getUserMedia ||
+    browser.getUserMedia =
+      browser.getUserMedia ||
       browser.webkitGetUserMedia ||
       browser.mozGetUserMedia ||
-      browser.msGetUserMedia);
+      browser.msGetUserMedia;
 
     browser.mediaDevices.getUserMedia(config).then(stream => {
       this.video.src = window.URL.createObjectURL(stream);
@@ -89,12 +88,12 @@ export class WorkoutComponent implements OnInit {
   public startExercise() {
     this.showTimer = true;
     this.timer = interval(1000).pipe(
-      map((x) => {
+      map(x => {
         if (this.defaultExerciseTime <= x) {
           this.startPosexercise();
         }
         return this.transformTime(this.defaultExerciseTime - x);
-       })
+      })
     );
   }
 
@@ -104,15 +103,9 @@ export class WorkoutComponent implements OnInit {
     this.startVideo();
   }
 
-  public onNotify(event: Event) {
+  public onNotify(event: Event) {}
 
-  }
+  public onFinished() {}
 
-  public onFinished() {
-
-  }
-
-  public onStart() {
-
-  }
+  public onStart() {}
 }

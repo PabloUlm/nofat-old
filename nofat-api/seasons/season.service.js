@@ -2,27 +2,27 @@
 const Season = db.Season;
 
 module.exports = {
-    getById,
-    create,
-    delete: _delete
+  getById,
+  create,
+  delete: _delete
 };
 
 async function getById(id) {
-    // return await Workout.findById(id).select('-hash');
+  // return await Workout.findById(id).select('-hash');
 }
 
 async function create(workoutParam) {
-    // validate
-    // if (await Workout.findOne({ week: workoutParam.week })) {
-    //     throw 'The week ' + workoutParam.week + ' from season "' + workoutParam.season + '" is already taken';
-    // }
+  // validate
+  // if (await Workout.findOne({ week: workoutParam.week })) {
+  //     throw 'The week ' + workoutParam.week + ' from season "' + workoutParam.season + '" is already taken';
+  // }
 
-    // const workout = new Workout(workoutParam);
+  // const workout = new Workout(workoutParam);
 
-    // save user
-    // await workout.save();
+  // save user
+  // await workout.save();
 }
 
 async function _delete(id) {
-    // await Season.findByIdAndRemove(id);
+  // await Season.findByIdAndRemove(id);
 }

@@ -5,10 +5,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AchievementService {
-
-  constructor(
-    private http: HttpClient
-    ) { }
+  constructor(private http: HttpClient) {}
 
   addAchievement(achievement: Achievement) {
     // console.log(localStorage.getItem('currentUser'));

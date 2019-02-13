@@ -1,2 +1,13 @@
 {
-}
+    "editor.rulers": [80],
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true,
+    "prettier.singleQuote": true,
+    "tslint.autoFixOnSave": true,
+    "html.format.wrapAttributes": "force-expand-multiline",
+    "editor.detectIndentation": false,
+    "prettier.disableLanguages": [
+      "vue",
+      "html",
+    ]
+  }

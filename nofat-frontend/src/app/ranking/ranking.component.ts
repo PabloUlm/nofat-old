@@ -9,7 +9,6 @@ import { UserService } from '../services';
   styleUrls: ['./ranking.component.styl']
 })
 export class RankingComponent implements OnInit {
-
   currentUser: User;
   users: User[] = [];
 
@@ -22,9 +21,11 @@ export class RankingComponent implements OnInit {
   }
 
   private loadAllUsers() {
-    this.userService.getAll().pipe(first()).subscribe(users => {
-      this.users = users;
-    });
+    this.userService
+      .getAll()
+      .pipe(first())
+      .subscribe(users => {
+        this.users = users;
+      });
   }
-
 }
