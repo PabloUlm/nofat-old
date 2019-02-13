@@ -5,19 +5,21 @@ var Workout = db.Workout;
 // const Season = db.Season;
 // Sessions will be added in the future
 
+SESSION_ID = 0;
+
 module.exports = {
-  add
+  add,
+  getCurrentWorkout
 };
 
 async function add(params) {
   var workout = new Workout();
 
   // Get session id number
-  var sessionId = 0; // TODO: Missing session logic
+  var sessionId = SESSION_ID; // TODO: Missing session logic
 
   // Get week number of the year
-  var dt = new Date();
-  var week = week_no(dt);
+  var week = getCurrentWeekNumber();
   workout.week = week;
 
   // Get workout id
@@ -59,6 +61,21 @@ async function add(params) {
   }
 
   return params;
+}
+
+async function getCurrentWorkout() {
+  var id = convertToHex(SESSION_ID, getCurrentWeekNumber());
+
+  if (await Workout.findOne({
+      _id: id
+    })) {
+    // There is already one existing workout for this week
+  }
+}
+
+function getCurrentWeekNumber() {
+  var dt = new Date();
+  return week_no(dt);
 }
 
 function convertToHex(sessionId, week) {
