@@ -37,12 +37,11 @@ export class NewWorkoutComponent implements OnInit {
   public onChanges(): void {
     this.newWorkoutForm.valueChanges.subscribe(val => {
       let total = 0;
-
       if (val.mode === 'minutes') {
         for (const exer of val.exercises) {
           const minutes = parseInt(exer.qty, 10);
           const exerData: Exercise[] = this.exercisesData.filter(
-            (val: Exercise) => val.id === exer.exercise
+            (val: Exercise) => val['_id'] === exer.exercise
           );
           if (exerData.length) {
             total += (exerData[0].difficulty * minutes) / MAGIC_NUMBER_MINUTES;
@@ -52,7 +51,7 @@ export class NewWorkoutComponent implements OnInit {
         for (const exer of val.exercises) {
           const rep = parseInt(exer.qty, 10);
           const exerData: Exercise[] = this.exercisesData.filter(
-            (val: Exercise) => val.id === exer.exercise
+            (val: Exercise) => val['_id'] === exer.exercise
           );
           if (exerData.length) {
             total += (exerData[0].difficulty * rep) / MAGIC_NUMBER_REPETITIONS;
