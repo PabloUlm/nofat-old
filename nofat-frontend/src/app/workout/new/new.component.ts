@@ -23,10 +23,13 @@ export class NewWorkoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private workoutService: WorkoutService,
     private exerciseService: ExerciseService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.getAllExercises();
+    this.workoutService.getWorkout().subscribe(res => {
+      console.log('getting ---', res);
+    });
     this.newWorkoutForm = this.formBuilder.group({
       mode: '',
       exercises: this.formBuilder.array([this.getExercEntry()])

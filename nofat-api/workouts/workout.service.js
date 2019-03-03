@@ -5,7 +5,7 @@ var Workout = db.Workout;
 // const Season = db.Season;
 // Sessions will be added in the future
 
-SESSION_ID = 0;
+const SESSION_ID = 0;
 
 module.exports = {
   add,
@@ -15,15 +15,12 @@ module.exports = {
 async function add(params) {
   var workout = new Workout();
 
-  // Get session id number
-  var sessionId = SESSION_ID; // TODO: Missing session logic
-
   // Get week number of the year
   var week = getCurrentWeekNumber();
   workout.week = week;
 
   // Get workout id
-  workout['_id'] = new mongoose.Types.ObjectId(convertToHex(sessionId.toString(), week.toString()));
+  workout['_id'] = new mongoose.Types.ObjectId(convertToHex(SESSION_ID, week.toString()));
 
   // Get mode
   workout.mode = params.mode;
@@ -66,11 +63,9 @@ async function add(params) {
 async function getCurrentWorkout() {
   var id = convertToHex(SESSION_ID, getCurrentWeekNumber());
 
-  if (await Workout.findOne({
-      _id: id
-    })) {
-    // There is already one existing workout for this week
-  }
+  return await Workout.findById({
+    _id: id
+  });
 }
 
 function getCurrentWeekNumber() {
@@ -78,11 +73,20 @@ function getCurrentWeekNumber() {
   return week_no(dt);
 }
 
+/**
+ * 
+ * @param {number} sessionId 
+ * @param {number} week 
+ */
 function convertToHex(sessionId, week) {
+  var sessionIdString = sessionId.toString();
   var hexBase = '000000000000000000000000';
   hexBase = hexBase.substring(week.length) + week;
-  return sessionId + hexBase.substring(sessionId.length);
+  return sessionIdString + hexBase.substring(sessionIdString.length);
 }
+//00000000000000000000000009
+//0000000000000000000000009
+//000000000000000000000000
 
 function saveWorkoutExercises(workoutId, params) {
   for (var i = 0; i < params.exercises.length; i++) {
