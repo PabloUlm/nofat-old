@@ -65,6 +65,19 @@ async function getCurrentWorkout() {
 
   return await Workout.findById({
     _id: id
+  }).then(w => {
+    if (w) {
+      return workoutExercise.getByWorkoutId(id).then(res => {
+        return {
+          workout: w,
+          exercises: res
+        };
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+  }).catch(err => {
+    console.log(err);
   });
 }
 
@@ -80,13 +93,11 @@ function getCurrentWeekNumber() {
  */
 function convertToHex(sessionId, week) {
   var sessionIdString = sessionId.toString();
+  var weekString = week.toString();
   var hexBase = '000000000000000000000000';
-  hexBase = hexBase.substring(week.length) + week;
-  return sessionIdString + hexBase.substring(sessionIdString.length);
+  var hexBaseWithSlots = hexBase.substring(sessionIdString.length + weekString.length);
+  return sessionIdString + hexBaseWithSlots + weekString;
 }
-//00000000000000000000000009
-//0000000000000000000000009
-//000000000000000000000000
 
 function saveWorkoutExercises(workoutId, params) {
   for (var i = 0; i < params.exercises.length; i++) {
@@ -96,7 +107,6 @@ function saveWorkoutExercises(workoutId, params) {
       params.exercises[i].qty);
   }
 }
-
 
 function week_no(dt) {
   var tdt = new Date(dt.valueOf());

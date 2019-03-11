@@ -6,6 +6,7 @@ var Exercise = db.Exercise;
 
 module.exports = {
   add,
+  getByWorkoutId,
   deleteByWorkoutId
 };
 
@@ -24,6 +25,12 @@ async function add(workoutId, exerciseId, qty) {
   } else {
     throw 'Error: Exercise with id ' + exerciseId + ' does NOT exist';
   }
+}
+
+async function getByWorkoutId(workoutId) {
+  return await WorkoutExercise.find({
+    workoutId: workoutId
+  });
 }
 
 async function deleteByWorkoutId(workoutId) {

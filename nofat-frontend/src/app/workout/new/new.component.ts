@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkoutService, ExerciseService } from '../../services';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  FormControl
+} from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { Exercise } from '../../_models';
 
@@ -23,18 +29,45 @@ export class NewWorkoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private workoutService: WorkoutService,
     private exerciseService: ExerciseService
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.getAllExercises();
-    this.workoutService.getWorkout().subscribe(res => {
-      console.log('getting ---', res);
-    });
+
     this.newWorkoutForm = this.formBuilder.group({
       mode: '',
       exercises: this.formBuilder.array([this.getExercEntry()])
     });
+
+    this.initValues();
     this.onChanges();
+  }
+
+  public initValues(): void {
+    this.workoutService.getWorkout().subscribe(workout => {
+      if (workout) {
+        this.newWorkoutForm.patchValue({
+          mode: workout.workout.mode
+        });
+
+        if (workout.exercises && workout.exercises.length) {
+          let index = 0;
+          for (const exer of workout.exercises) {
+            if (index !== 0) {
+              // The first one is created in the form builder
+              this.addExercise();
+            }
+            this.newWorkoutForm.controls['exercises'].controls[
+              index
+            ].patchValue({
+              exercise: exer.exerciseId,
+              qty: exer.qty
+            });
+            index++;
+          }
+        }
+      }
+    });
   }
 
   public onChanges(): void {
