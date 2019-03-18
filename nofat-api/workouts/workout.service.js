@@ -69,7 +69,8 @@ async function getCurrentWorkout() {
     if (w) {
       return workoutExercise.getByWorkoutId(id).then(res => {
         return {
-          workout: w,
+          mode: w.mode,
+          week: w.week,
           exercises: res
         };
       }).catch(err => {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WorkoutService, ExerciseService } from '../../services';
+import { IRoutine } from '../../../typings';
 import {
   FormBuilder,
   FormGroup,
@@ -29,7 +30,7 @@ export class NewWorkoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private workoutService: WorkoutService,
     private exerciseService: ExerciseService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.getAllExercises();
@@ -44,10 +45,10 @@ export class NewWorkoutComponent implements OnInit {
   }
 
   public initValues(): void {
-    this.workoutService.getWorkout().subscribe(workout => {
+    this.workoutService.getWorkout().subscribe((workout: IRoutine) => {
       if (workout) {
         this.newWorkoutForm.patchValue({
-          mode: workout.workout.mode
+          mode: workout.mode
         });
 
         if (workout.exercises && workout.exercises.length) {
@@ -57,12 +58,14 @@ export class NewWorkoutComponent implements OnInit {
               // The first one is created in the form builder
               this.addExercise();
             }
-            this.newWorkoutForm.controls['exercises'].controls[
-              index
-            ].patchValue({
-              exercise: exer.exerciseId,
-              qty: exer.qty
-            });
+            if (this.newWorkoutForm.controls['exercises']['controls']) {
+              this.newWorkoutForm.controls['exercises']['controls'][
+                index
+              ].patchValue({
+                exercise: exer.exerciseId,
+                qty: exer.qty
+              });
+            }
             index++;
           }
         }
