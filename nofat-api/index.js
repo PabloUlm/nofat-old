@@ -1,25 +1,20 @@
-var app = require('express')();
-var fileUpload = require('express-fileupload');
-var server = require('http').Server(app);
-var mongoose = require('mongoose');
-var config = require('./config.json');
+require('rootpath')();
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-app.use(fileUpload());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(bodyParser.json());
+app.use(cors());
 
-server.listen(4000);
+app.use('/api', require('./api').default());
+app.use('/backend', require('./backend').default());
 
-mongoose.connect(config.connectionString, {
-  useNewUrlParser: true
+// start server
+const port = process.env.NODE_ENV === 'production' ? 80 : 4000;
+app.listen(port, function () {
+  console.log('Server listening on port ' + port);
 });
-
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
-
-var template = require('./exercises/template.js');
-app.get('/exercises/template', template.get);
-
-var upload = require('./exercises/exercises.upload.js');
-app.post('/', upload.post);
-
-// https://code.tutsplus.com/articles/bulk-import-a-csv-file-into-mongodb-using-mongoose-with-nodejs--cms-29574
