@@ -4,7 +4,7 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AuthGuard } from './_guards';
-import { WorkoutComponent, NewWorkoutComponent } from './workout';
+import { WorkoutComponent, EditWorkoutComponent } from './workout';
 import { RankingComponent } from './ranking/ranking.component';
 
 const appRoutes: Routes = [
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
     children: [
       { path: '', component: RankingComponent },
       { path: 'workout', component: WorkoutComponent },
-      { path: 'workout/new', component: NewWorkoutComponent },
+      { path: 'workout/edit', component: EditWorkoutComponent },
       { path: 'ranking', component: RankingComponent }
     ]
   },

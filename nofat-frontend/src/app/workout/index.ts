@@ -1,2 +1,2 @@
 ﻿export * from './workout.component';
-export * from './new/new.component';
+export * from './edit/edit.component';

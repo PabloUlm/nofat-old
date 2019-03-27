@@ -15,11 +15,11 @@ export const MAGIC_NUMBER_REPETITIONS = 80; // bigger is less difficulty
 export const MAGIC_NUMBER_MINUTES = 8; // bigger is more difficulty
 
 @Component({
-  selector: 'app-new-workout',
-  templateUrl: './new.component.html',
-  styleUrls: ['./new.component.styl']
+  selector: 'app-edit-workout',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.styl']
 })
-export class NewWorkoutComponent implements OnInit {
+export class EditWorkoutComponent implements OnInit {
   public exercises: FormArray;
   public newWorkoutForm: FormGroup;
   public submitted = false;
@@ -30,7 +30,7 @@ export class NewWorkoutComponent implements OnInit {
     private formBuilder: FormBuilder,
     private workoutService: WorkoutService,
     private exerciseService: ExerciseService
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.getAllExercises();
@@ -125,7 +125,6 @@ export class NewWorkoutComponent implements OnInit {
 
   public getAllExercises(): void {
     this.exerciseService.getAll().subscribe(res => {
-      console.log('### res ', res);
       this.exercisesData = res;
     });
   }

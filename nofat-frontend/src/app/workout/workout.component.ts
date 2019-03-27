@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { interval, BehaviorSubject, Observable } from 'rxjs';
+import { interval, Observable } from 'rxjs';
 import { map, first } from 'rxjs/operators';
 import { AchievementService } from '../services/achievement.service';
 import { Achievement } from '../_models';
+import { WorkoutService } from '../services';
+import { IRoutine } from 'src/typings';
 
 @Component({
   selector: 'app-workout',
@@ -11,10 +13,8 @@ import { Achievement } from '../_models';
 })
 export class WorkoutComponent implements OnInit {
   @ViewChild('videoElement') public videoElement: any;
-  public video: any;
   public defaultExerciseTime = 10; // = 600; // 10 minutes
   public showTimer = false;
-  public showCamera = false;
   public timer: Observable<string>;
   public achievement: Achievement = {
     id: 12245,
@@ -25,10 +25,15 @@ export class WorkoutComponent implements OnInit {
     workoutId: 123
   };
 
-  constructor(public achievementService: AchievementService) {}
+  constructor(
+    public achievementService: AchievementService,
+    public workoutService: WorkoutService
+  ) {}
 
   ngOnInit() {
-    this.video = this.videoElement.nativeElement;
+    this.workoutService.getWorkout().subscribe((workout: IRoutine) => {
+      console.log(workout);
+    });
   }
 
   public workoutDone(): void {
@@ -50,62 +55,10 @@ export class WorkoutComponent implements OnInit {
     return minutes + ':' + (seconds - minutes * 60);
   }
 
-  public start(): void {
-    this.initCamera({ video: true, audio: false });
-  }
-
-  public sound(): void {
-    this.initCamera({ video: true, audio: true });
-  }
-
-  public initCamera(config: any): void {
-    const browser = <any>navigator;
-
-    browser.getUserMedia =
-      browser.getUserMedia ||
-      browser.webkitGetUserMedia ||
-      browser.mozGetUserMedia ||
-      browser.msGetUserMedia;
-
-    browser.mediaDevices.getUserMedia(config).then(stream => {
-      this.video.src = window.URL.createObjectURL(stream);
-      this.video.play();
-    });
-  }
-
-  public pause(): void {
-    this.video.pause();
-  }
-
-  public resume(): void {
-    this.video.play();
-  }
-
-  public startVideo() {
-    this.start();
-  }
-
   public startExercise() {
     this.showTimer = true;
     this.timer = interval(1000).pipe(
-      map(x => {
-        if (this.defaultExerciseTime <= x) {
-          this.startPosexercise();
-        }
-        return this.transformTime(this.defaultExerciseTime - x);
-      })
+      map(x => this.transformTime(this.defaultExerciseTime - x))
     );
   }
-
-  public startPosexercise() {
-    this.showTimer = false;
-    this.showCamera = true;
-    this.startVideo();
-  }
-
-  public onNotify(event: Event) {}
-
-  public onFinished() {}
-
-  public onStart() {}
 }

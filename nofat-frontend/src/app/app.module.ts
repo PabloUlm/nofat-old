@@ -21,7 +21,7 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { UserComponent } from './user';
-import { WorkoutComponent, NewWorkoutComponent } from './workout';
+import { WorkoutComponent, EditWorkoutComponent } from './workout';
 import { AchievementService, WorkoutService } from './services';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -53,7 +53,7 @@ import { RankingComponent } from './ranking/ranking.component';
     RegisterComponent,
     UserComponent,
     WorkoutComponent,
-    NewWorkoutComponent,
+    EditWorkoutComponent,
     RankingComponent
   ],
   providers: [
