@@ -71,7 +71,7 @@ async function getCurrentWorkout() {
         return {
           mode: w.mode,
           week: w.week,
-          exercises: res
+          workoutExercises: res
         };
       }).catch(err => {
         console.log(err);

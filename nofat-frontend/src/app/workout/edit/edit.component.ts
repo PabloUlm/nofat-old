@@ -51,9 +51,9 @@ export class EditWorkoutComponent implements OnInit {
           mode: workout.mode
         });
 
-        if (workout.exercises && workout.exercises.length) {
+        if (workout.workoutExercises && workout.workoutExercises.length) {
           let index = 0;
-          for (const exer of workout.exercises) {
+          for (const exer of workout.workoutExercises) {
             if (index !== 0) {
               // The first one is created in the form builder
               this.addExercise();

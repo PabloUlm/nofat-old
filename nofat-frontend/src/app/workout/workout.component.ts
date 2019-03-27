@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { interval, Observable } from 'rxjs';
+import { interval, Observable, BehaviorSubject } from 'rxjs';
 import { map, first } from 'rxjs/operators';
 import { AchievementService } from '../services/achievement.service';
 import { Achievement } from '../_models';
-import { WorkoutService } from '../services';
-import { IRoutine } from 'src/typings';
+import { WorkoutService, ExerciseService } from '../services';
+import { IRoutine, IExercise } from 'src/typings';
 
 @Component({
   selector: 'app-workout',
@@ -14,6 +14,8 @@ import { IRoutine } from 'src/typings';
 export class WorkoutComponent implements OnInit {
   @ViewChild('videoElement') public videoElement: any;
   public defaultExerciseTime = 10; // = 600; // 10 minutes
+  public routine$: BehaviorSubject<IRoutine> = new BehaviorSubject(null);
+  public exercisesData$: BehaviorSubject<IExercise[]> = new BehaviorSubject([]);
   public showTimer = false;
   public timer: Observable<string>;
   public achievement: Achievement = {
@@ -27,12 +29,16 @@ export class WorkoutComponent implements OnInit {
 
   constructor(
     public achievementService: AchievementService,
-    public workoutService: WorkoutService
+    public workoutService: WorkoutService,
+    public exerciseService: ExerciseService
   ) {}
 
   ngOnInit() {
-    this.workoutService.getWorkout().subscribe((workout: IRoutine) => {
-      console.log(workout);
+    this.exerciseService.getAll().subscribe(res => {
+      this.exercisesData$.next(res);
+    });
+    this.workoutService.getWorkout().subscribe((routine: IRoutine) => {
+      this.routine$.next(routine);
     });
   }
 
@@ -48,6 +54,15 @@ export class WorkoutComponent implements OnInit {
           console.log('shit');
         }
       );
+  }
+
+  public getExerciseName(id: string): string {
+    // TODO: make this logic in server when getting the routine
+    const exercise = this.exercisesData$
+      .getValue()
+      .filter(exer => exer._id === id);
+
+    return exercise[0].name;
   }
 
   public transformTime(seconds: number): string {

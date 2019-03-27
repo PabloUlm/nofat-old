@@ -2,8 +2,16 @@
   workout
 </h2>
 
-<section class="preview">
-  hola
+<section
+  *ngIf="(routine$ | async) && (exercisesData$ | async)"
+  class="preview"
+>
+  <ul>
+    <li *ngFor="let exercise of (routine$ | async).workoutExercises">
+      <span>{{ getExerciseName(exercise.exerciseId) }}</span>
+      <span>{{ exercise.qty }}</span>
+    </li>
+  </ul>
 </section>
 
 <button

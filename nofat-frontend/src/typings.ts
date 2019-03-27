@@ -1,11 +1,20 @@
 export interface IRoutine {
   mode: string;
   week: number;
-  exercises: IExercise[];
+  workoutExercises: IWorkoutExercise[];
 }
 
-export interface IExercise {
+export interface IWorkoutExercise {
   workoutId: string;
   exerciseId: number;
   qty: number;
+}
+
+export interface IExercise {
+  _id: string;
+  id: number;
+  name: string;
+  difficulty: number;
+  description: string;
+  url: string;
 }
