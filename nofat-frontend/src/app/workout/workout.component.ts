@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { interval, Observable, BehaviorSubject } from 'rxjs';
-import { map, first } from 'rxjs/operators';
+import { map, first, tap } from 'rxjs/operators';
 import { AchievementService } from '../services/achievement.service';
 import { Achievement } from '../_models';
 import { WorkoutService, ExerciseService } from '../services';
 import { IRoutine, IExercise } from 'src/typings';
+import * as NoSleep from 'nosleep.js';
 
 @Component({
   selector: 'app-workout',
@@ -13,9 +14,10 @@ import { IRoutine, IExercise } from 'src/typings';
 })
 export class WorkoutComponent implements OnInit {
   @ViewChild('videoElement') public videoElement: any;
-  public defaultExerciseTime = 10; // = 600; // 10 minutes
+  public defaultExerciseTime = 600; // 10 minutes
   public routine$: BehaviorSubject<IRoutine> = new BehaviorSubject(null);
   public exercisesData$: BehaviorSubject<IExercise[]> = new BehaviorSubject([]);
+  public noSleep = new NoSleep();
   public showTimer = false;
   public timer: Observable<string>;
   public achievement: Achievement = {
@@ -31,7 +33,7 @@ export class WorkoutComponent implements OnInit {
     public achievementService: AchievementService,
     public workoutService: WorkoutService,
     public exerciseService: ExerciseService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.exerciseService.getAll().subscribe(res => {
@@ -70,10 +72,20 @@ export class WorkoutComponent implements OnInit {
     return minutes + ':' + (seconds - minutes * 60);
   }
 
+  public exerciseFinished() {
+    this.noSleep.disable();
+  }
+
   public startExercise() {
     this.showTimer = true;
+    this.noSleep.enable();
     this.timer = interval(1000).pipe(
-      map(x => this.transformTime(this.defaultExerciseTime - x))
+      map(x => this.transformTime(this.defaultExerciseTime - x)),
+      tap(time => {
+        if (time === '0:00') {
+          this.exerciseFinished();
+        }
+      })
     );
   }
 }
