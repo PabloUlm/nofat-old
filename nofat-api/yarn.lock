@@ -1817,7 +1817,15 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mongodb@3.3.3, mongodb@^3.1.12:
+mongodb@3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.3.2.tgz#ff086b5f552cf07e24ce098694210f3d42d668b2"
+  dependencies:
+    bson "^1.1.1"
+    require_optional "^1.0.1"
+    safe-buffer "^5.1.2"
+
+mongodb@^3.1.12:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.3.3.tgz#509cad2225a1c56c65a331ed73a0d5d4ed5cbe67"
   dependencies:
@@ -1831,13 +1839,13 @@ mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
 
-mongoose@^5.4.5:
-  version "5.7.7"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.7.7.tgz#038b47d10434ea6cc9ec9b45d88bfcf9ab401a1a"
+mongoose@^5.7.5:
+  version "5.7.5"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.7.5.tgz#b787b47216edf62036aa358c3ef0f1869c46cdc2"
   dependencies:
     bson "~1.1.1"
     kareem "2.3.1"
-    mongodb "3.3.3"
+    mongodb "3.3.2"
     mongoose-legacy-pluralize "1.0.2"
     mpath "0.6.0"
     mquery "3.2.2"
@@ -1865,11 +1873,11 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
-ms@2.1.1, ms@^2.1.1:
+ms@2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
 
-ms@2.1.2:
+ms@2.1.2, ms@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
 
