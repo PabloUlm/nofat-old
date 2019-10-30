@@ -8,7 +8,20 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(bodyParser.json());
-app.use(cors());
+
+console.log('---> ', process.env.NODE_ENV);
+if (process.env.NODE_ENV === 'development') {
+  console.log('::: DEVELOP MODE :::');
+  app.use(cors());
+}
+
+// app.configure('development', () => {
+//   //...
+// });
+
+// app.configure('production', () => {
+//   //...
+// });
 
 app.use('/api', require('./api').default());
 app.use('/backend', require('./backend').default());

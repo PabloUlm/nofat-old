@@ -4,15 +4,34 @@
   "description": "NodeJS + MongoDB API for NoFat Management",
   "license": "MIT",
   "scripts": {
-    "debug": "node --nolazy --inspect-brk=9229 ./server.js",
-    "start": "nodemon ./index.js",
+    "debug": "node --nolazy --inspect-brk=9229 ./src/index.ts",
+    "start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
+    "start:watch": "nodemon",
+    "start-dev": "set NODE_ENV=development && nodemon",
+    "build": "tsc",
     "predeploy": "rsync --progress -r . nofat:/app/api --exclude node_modules",
     "deploy": "ssh nofat 'cd /app/api && npm install && service nofat-api restart'"
   },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
+  },
   "dependencies": {
+    "@types/node": "^12.11.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
+    "eslint": "^6.6.0",
+    "eslint-plugin-import": "^2.18.2",
     "express": "^4.16.4",
     "express-fileupload": "^1.1.1-alpha.1",
     "express-jwt": "^5.3.1",
@@ -21,9 +40,11 @@
     "jsonwebtoken": "^8.4.0",
     "mongodb": "^3.1.12",
     "mongoose": "^5.4.5",
-    "rootpath": "^0.1.2"
+    "rootpath": "^0.1.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.19.4"
   }
 }
